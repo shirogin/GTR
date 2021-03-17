@@ -5,18 +5,19 @@
 #define Longueur_Max_T 255
 
 /* 1- longueur de chain */
-int Longueur(const char *text)
+int Longueur(const char *text) //char text[]
 {
     int i = 0;
     while (text[i] != '\0' && i < Longueur_Max)
         i++;
+    //AMEL\0 i=4
     return i;
 }
 /* 2- nombre des mots dans une chaine de caract�re */
 int NbrDesMots(const char *msg)
 {
     int N = 0, l = Longueur(msg);
-    if (l > 0 && !(msg[0] == ' ' || msg[0] == '\t'))
+    if (l > 0 && !(msg[0] == ' ' || msg[0] == '\t')) // Amel Rahi tayb
         N++;
     for (int i = 0; i < l; i++)
         if ((msg[i] == ' ' || msg[i] == '\t') && (i + 1 < l && !(msg[i + 1] == ' ' || msg[i + 1] == '\t')))
@@ -141,7 +142,7 @@ char *motPlusLong(const char *text)
         if (!(text[i] == ' ' || text[i] == '\t'))
         {
             j = 1;
-            while (!(text[i + j] == ' ' || text[i + j] == '\t'))
+            while ((i + j) < l && !(text[i + j] == ' ' || text[i + j] == '\t'))
                 j++;
             if (j > max)
             {
@@ -153,7 +154,6 @@ char *motPlusLong(const char *text)
             j = 1;
         i += j;
     }
-
     //allocation de tableau
     char *mot = (char *)malloc(sizeof(char) * (max + 1));
     for (i = 0; i < max; i++)
@@ -299,18 +299,18 @@ int main()
         case 7:
         {
             printf("remplace un mot par un autre mot. \n    Entrez le mot que vous voulez remplacer :");
-            scanf("%s", mot);
+            scanf("%[^\n]s", mot);
             fflush(stdin);
             char mot2[Longueur_Max_Mot];
             printf("    Entrez le mot que vous voulez remplacer par :");
-            scanf("%s", mot2);
+            scanf("%[^\n]s", mot2);
             fflush(stdin);
             RemplaceM(text, mot, mot2);
         }
         break;
         case 8:
         {
-            printf("vérifie si un mot donné Palindrome. \n    Entrez le mot :");
+            printf("vérifie si un mot donné Palindrome. \n    Entrez le mot : ");
             scanf("%s", mot);
             fflush(stdin);
             printf("le mot %s est %s\n", mot, Palindrome(mot) != 0 ? "palandrome" : "n'est pas palandrome");
