@@ -41,7 +41,7 @@ void RemplaceC(char *text, const char c1, const char c2)
 /* 5- ins�re un mot � une position donn�e du texte */
 void InsereUnMot(char *text, const char *mot, int position)
 {
-    int i, insere = 0, l = Longueur(text), m = Longueur(mot);
+    int i,  l = Longueur(text), m = Longueur(mot);
     if (position > l)
     {
         printf("position est plus grand que la taille de text");
@@ -95,8 +95,10 @@ void RemplaceM(char *text, const char *mot, const char *mot2)
         }
         i++;
     }
-    if (exist == -1)
-        return printf("mot introuvable");
+    if (exist == -1){
+        printf("mot introuvable");
+        return ;
+    }
     int d = m - m2;
     if (d > 0)
         for (i = exist + m2; i < l; i++)
