@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define Longueur_Max 300
+#define Longueur_Max_Mot 50
+#define Longueur_Max_T 255
+
 /* 1- longueur de chain */
 int Longueur(const char *text)
 {
@@ -41,7 +44,7 @@ void RemplaceC(char *text, const char c1, const char c2)
 /* 5- ins�re un mot � une position donn�e du texte */
 void InsereUnMot(char *text, const char *mot, int position)
 {
-    int i,  l = Longueur(text), m = Longueur(mot);
+    int i, l = Longueur(text), m = Longueur(mot);
     if (position > l)
     {
         printf("position est plus grand que la taille de text");
@@ -95,9 +98,10 @@ void RemplaceM(char *text, const char *mot, const char *mot2)
         }
         i++;
     }
-    if (exist == -1){
+    if (exist == -1)
+    {
         printf("mot introuvable");
-        return ;
+        return;
     }
     int d = m - m2;
     if (d > 0)
@@ -198,27 +202,32 @@ void Menu(const char *text)
 {
     printf("\n\n ---------------------------------------------------------\n");
     if (Longueur(text) > 0)
+    {
         printf("notre text est : %s \n\n", text);
+        printf("0.  Resaiser le text .\n");
+    }
     else
+    {
         printf("Le text est n'est pas saisser \n");
-    printf("0.  Saiser le text .");
-    printf("1.	la longueur de la chaine de de caractères (nombre de caractères).\n");
-    printf("2.	le nombre de mots du texte (de la chaine de caractères). \n");
-    printf("3.	le nombre de caractères numériques dans le texte. \n");
-    printf("4.	remplace un caractère par un autre.\n");
-    printf("5.	insère un mot à une position donnée du texte.\n");
-    printf("6.	vérifie l’existence d’un mot dans le texte.\n");
-    printf("7.	remplace un mot par un autre mot.\n");
-    printf("8.	vérifie si un mot donné Palindrome. \n");
-    printf("9.	le mot le plus long dans le texte.\n");
-    printf("10.	les caractères et leur nombre d’occurrence dans le texte.\n");
-    printf("*.	Entre un autre caractere pour quitee.\n");
+        printf("0.  Saiser le text .\n");
+    }
+    printf("1.  La longueur de la chaine de de caractères (nombre de caractères).\n");
+    printf("2.  Le nombre de mots du texte (de la chaine de caractères). \n");
+    printf("3.  Le nombre de caractères numériques dans le texte. \n");
+    printf("4.  Remplace un caractère par un autre.\n");
+    printf("5.  Insère un mot à une position donnée du texte.\n");
+    printf("6.  Vérifie l’existence d’un mot dans le texte.\n");
+    printf("7.  Remplace un mot par un autre mot.\n");
+    printf("8.  Vérifie si un mot donné Palindrome. \n");
+    printf("9.  Le mot le plus long dans le texte.\n");
+    printf("10  Les caractères et leur nombre d’occurrence dans le texte.\n");
+    printf("*.  Entre un autre caractere pour quitee.\n\n");
 }
 int main()
 {
-    char text[Longueur_Max], T[Longueur_Max];
-    int V[Longueur_Max], choix = 0;
-
+    char text[Longueur_Max], T[Longueur_Max_T], mot[Longueur_Max_Mot];
+    int V[Longueur_Max_T], choix = 0;
+    text[0] = '\0';
     while (1)
     {
         Menu(text);
@@ -258,30 +267,57 @@ int main()
             printf("Entre caracteres qui vous voulez le change par :");
             scanf("%c", &c2);
             fflush(stdin);
+            RemplaceC(text, c1, c2);
         }
         break;
         case 5:
         {
+            printf("insère un mot à une position donnée du texte,\n Entre le mot :");
+            scanf("%s", mot);
+            fflush(stdin);
+            int position;
+            scanf("%d", &position);
+            fflush(stdin);
+            InsereUnMot(text, mot, position);
         }
         break;
         case 6:
         {
+            printf("vérifie l’existence d’un mot dans le texte,\n   Entre le mot :");
+            scanf("%s", mot);
+            fflush(stdin);
+            int exist = MotExist(text, mot);
+            if (exist == 0)
+                printf("le mot exist.\n");
+            else
+                printf("le mot ne exist pas.\n");
         }
         break;
         case 7:
         {
+            printf("remplace un mot par un autre mot. \n    Entrez le mot que vous voulez remplacer :");
+            scanf("%s", mot);
+            fflush(stdin);
+            char mot2[Longueur_Max_Mot];
+            printf("    Entrez le mot que vous voulez remplacer par :");
+            scanf("%s", mot2);
+            fflush(stdin);
+            RemplaceM(text, mot, mot2);
         }
         break;
         case 8:
         {
+            printf("vérifie si un mot donné Palindrome. \n    Entrez le mot :");
         }
         break;
         case 9:
         {
+            printf("le mot le plus long dans le texte est: %s\n", motPlusLong(text));
         }
         break;
         case 10:
         {
+            CaractereOccurrences(text, T, V);
         }
         break;
         default:
@@ -289,6 +325,7 @@ int main()
             return 0;
         }
         }
+        pause();
     }
 
     return 0;
