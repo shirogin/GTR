@@ -133,7 +133,7 @@ int Palindrome(const char *text)
 /* 9- le mot le plus long dans le texte */
 char *motPlusLong(const char *text)
 {
-    int i = 0, l = Longueur(text), j = 0, p = 0, max;
+    int i = 0, l = Longueur(text), j = 0, p = 0, max = 0;
     if (l > 0 && !(text[0] == ' ' || text[0] == '\t'))
         j++;
     while (i < l)
@@ -153,6 +153,7 @@ char *motPlusLong(const char *text)
             j = 1;
         i += j;
     }
+
     //allocation de tableau
     char *mot = (char *)malloc(sizeof(char) * (max + 1));
     for (i = 0; i < max; i++)
@@ -208,19 +209,19 @@ void Menu(const char *text)
     }
     else
     {
-        printf("Le text est n'est pas saisser \n");
+        printf("Le text est n'est pas saisser \n\n");
         printf("0.  Saiser le text .\n");
     }
-    printf("1.  La longueur de la chaine de de caractères (nombre de caractères).\n");
-    printf("2.  Le nombre de mots du texte (de la chaine de caractères). \n");
-    printf("3.  Le nombre de caractères numériques dans le texte. \n");
-    printf("4.  Remplace un caractère par un autre.\n");
-    printf("5.  Insère un mot à une position donnée du texte.\n");
-    printf("6.  Vérifie l’existence d’un mot dans le texte.\n");
+    printf("1.  La longueur de la chaine de de caracteres (nombre de caracteres).\n");
+    printf("2.  Le nombre de mots du texte (de la chaine de caracteres). \n");
+    printf("3.  Le nombre de caracteres numeriques dans le texte. \n");
+    printf("4.  Remplace un caractere par un autre.\n");
+    printf("5.  Insere un mot a une position donnee du texte.\n");
+    printf("6.  Verifie l'existence d'un mot dans le texte.\n");
     printf("7.  Remplace un mot par un autre mot.\n");
-    printf("8.  Vérifie si un mot donné Palindrome. \n");
+    printf("8.  Verifie si un mot donne Palindrome. \n");
     printf("9.  Le mot le plus long dans le texte.\n");
-    printf("10  Les caractères et leur nombre d’occurrence dans le texte.\n");
+    printf("10  Les caracteres et leur nombre d'occurrence dans le texte.\n");
     printf("*.  Entre un autre caractere pour quitee.\n\n");
 }
 int main()
@@ -272,10 +273,11 @@ int main()
         break;
         case 5:
         {
-            printf("insère un mot à une position donnée du texte,\n Entre le mot :");
-            scanf("%s", mot);
+            printf("insère un mot à une position donnée du texte,\n Entre le mot : ");
+            scanf("%[^\n]s", mot);
             fflush(stdin);
             int position;
+            printf("n   Entre la position ou vous voulez insere: ");
             scanf("%d", &position);
             fflush(stdin);
             InsereUnMot(text, mot, position);
@@ -286,8 +288,9 @@ int main()
             printf("vérifie l’existence d’un mot dans le texte,\n   Entre le mot :");
             scanf("%s", mot);
             fflush(stdin);
+            printf("%s", mot);
             int exist = MotExist(text, mot);
-            if (exist == 0)
+            if (exist == 1)
                 printf("le mot exist.\n");
             else
                 printf("le mot ne exist pas.\n");
@@ -308,6 +311,9 @@ int main()
         case 8:
         {
             printf("vérifie si un mot donné Palindrome. \n    Entrez le mot :");
+            scanf("%s", mot);
+            fflush(stdin);
+            printf("le mot %s est %s\n", mot, Palindrome(mot) != 0 ? "palandrome" : "n'est pas palandrome");
         }
         break;
         case 9:
@@ -325,7 +331,7 @@ int main()
             return 0;
         }
         }
-        pause();
+        system("pause");
     }
 
     return 0;
